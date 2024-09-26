@@ -8,7 +8,7 @@ import { MaterialModule } from './shared/material.module';
 // import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { SharedModule } from './shared/shared.module';
-import { LoginComponent } from './login';
+import { LoginComponent } from './login/login.component';
 import { AuthenticationService, BackendService, PagerService } from './_services';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -18,6 +18,8 @@ import { NotFoundPageComponent } from './notfoundpage';
 import { ConfirmDialog } from './shared/dialog.component';
 import { LoadingComponent } from  './loading';
 import { AuthGuard } from './_guard';
+import { SitesComponent } from './sites/sites.component';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { AuthGuard } from './_guard';
     NotFoundPageComponent,
     ConfirmDialog,
     LoadingComponent,
-    AppComponent
+    AppComponent,
+    SitesComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,8 @@ import { AuthGuard } from './_guard';
     HttpClientModule,
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ChartsModule,
-    AppRoutingModule
+    AppRoutingModule,
+
   ],
   providers: [
     AuthGuard,

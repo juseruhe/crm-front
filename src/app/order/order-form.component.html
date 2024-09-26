@@ -5,7 +5,7 @@
       <mat-toolbar-row>
         <span class="view-card-title"> {{pageTitle}}</span>
         <span class="title-spacer"></span>
-        <mat-card-actions>
+        <mat-card-actions>  
           <button mat-mini-fab class="primary" style="margin-right:10px; background-color:darkgray" type="submit"
             [disabled]='!orderForm.valid'>
             <mat-icon>save</mat-icon>
@@ -26,7 +26,7 @@
         <mat-grid-list cols="12" rowHeight="80px">
           <mat-grid-tile [colspan]="fieldColspan">
             <mat-form-field class="form-field" appearance="outline">
-              <mat-select placeholder="Select Customer" #customerIdId formControlName="customerId"
+              <mat-select placeholder="Seleccionar Cliente" #customerIdId formControlName="customerId"
                 [(value)]="order.customerId">
                 <mat-option *ngFor="let customer of customers" [value]="customer.id">
                   {{customer.firstname}} {{customer.lastname}}
@@ -36,7 +36,7 @@
           </mat-grid-tile>
           <mat-grid-tile [colspan]="fieldColspan">
             <mat-form-field class="form-field" appearance="outline">
-              <input matInput placeholder="Reference No" id="referenceId" type="text"
+              <input matInput placeholder="Referencia No" id="referenceId" type="text"
                 placeholder="Reference No. (required)" formControlName="reference" />
               <mat-error *ngIf="displayMessage.reference">
                 {{displayMessage.reference}}
@@ -63,14 +63,14 @@
           </mat-grid-tile>
           <mat-grid-tile [colspan]="fieldColspan">
             <mat-form-field class="form-field" appearance="outline">
-              <input matInput [matDatepicker]="orderpickerId" placeholder="Order date" [value]="order.orderDate">
+              <input matInput [matDatepicker]="orderpickerId" placeholder="Fecha de pedido" [value]="order.orderDate">
               <mat-datepicker-toggle matSuffix [for]="orderpickerId"></mat-datepicker-toggle>
               <mat-datepicker #orderpickerId></mat-datepicker>
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="fieldColspan">
             <mat-form-field class="form-field" appearance="outline">
-              <input matInput [matDatepicker]="shippedDateId" placeholder="Shipped date" [value]="order.shippedDate">
+              <input matInput [matDatepicker]="shippedDateId" placeholder="Fecha de envío" [value]="order.shippedDate">
               <mat-datepicker-toggle matSuffix [for]="shippedDateId"></mat-datepicker-toggle>
               <mat-datepicker #shippedDateId></mat-datepicker>
             </mat-form-field>
@@ -78,7 +78,7 @@
           <mat-grid-tile [colspan]="fieldColspan">
 
             <mat-form-field class="form-field" appearance="outline">
-              <input matInput placeholder="Address" id="addressId" type="text" formControlName="address" disabled />
+              <input matInput placeholder="Dirección" id="addressId" type="text" formControlName="address" disabled />
               <mat-error class="help-block" *ngIf="displayMessage.address">
                 {{displayMessage.address}}
               </mat-error>
@@ -86,7 +86,7 @@
           </mat-grid-tile>
           <mat-grid-tile [colspan]="fieldColspan">
             <mat-form-field class="form-field" appearance="outline">
-              <input matInput placeholder="City" id="cityId" type="text" formControlName="city" />
+              <input matInput placeholder="Ciudad" id="cityId" type="text" formControlName="city" />
               <mat-error class="help-block" *ngIf="displayMessage.city">
                 {{displayMessage.city}}
               </mat-error>
@@ -94,7 +94,7 @@
           </mat-grid-tile>
           <mat-grid-tile [colspan]="fieldColspan">
             <mat-form-field class="form-field" appearance="outline">
-              <input matInput placeholder="Country" id="countryId" type="text" formControlName="country" />
+              <input matInput placeholder="País" id="countryId" type="text" formControlName="country" />
               <mat-error class="help-block" *ngIf="displayMessage.country">
                 {{displayMessage.country}}
               </mat-error>
@@ -102,7 +102,7 @@
           </mat-grid-tile>
           <mat-grid-tile [colspan]="fieldColspan">
             <mat-form-field class="form-field" appearance="outline">
-              <input matInput placeholder="Zipcode" id="zipcodeId" type="text" formControlName="zipcode" />
+              <input matInput placeholder="código postal" id="zipcodeId" type="text" formControlName="zipcode" />
               <mat-error class="help-block" *ngIf="displayMessage.zipcode">
                 {{displayMessage.zipcode}}
               </mat-error>
@@ -114,7 +114,7 @@
       <!-- product list -->
 
       <mat-list *ngIf="order!=null && order.products!=null">
-        <h3 mat-subheader>Products</h3>
+        <h3 mat-subheader>Productos</h3>
         <mat-list-item style="background-color:#e7ecf7; padding-bottom:2px; margin-bottom:5px;"
           *ngFor="let product of order.products">
           <mat-icon mat-list-icon>folder</mat-icon>

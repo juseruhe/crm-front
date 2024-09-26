@@ -39,23 +39,23 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="firstname">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Nombres </mat-header-cell>
       <mat-cell *matCellDef="let customer"> {{customer.firstname}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="lastname">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </mat-header-cell>
       <mat-cell *matCellDef="let customer"> {{customer.lastname}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="email">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Correo </mat-header-cell>
       <mat-cell *matCellDef="let customer"> {{customer.email}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="rewards">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Rewards </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Recompensas </mat-header-cell>
       <mat-cell *matCellDef="let customer"> {{customer.rewards | number }} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="membership">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Membershiop</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Afiliado</mat-header-cell>
       <mat-cell *matCellDef="let customer">
         <span *ngIf="!customer.membership" style="color:green">
           <mat-icon>check_circle</mat-icon>
@@ -94,7 +94,7 @@
         <mat-icon>search</mat-icon>
       </div>
       <mat-card-title>
-        Advanced Search
+        Búsqueda Avanzada
       </mat-card-title>
     </mat-card-header>
   </mat-card>

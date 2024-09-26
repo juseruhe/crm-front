@@ -21,7 +21,7 @@ export class OrderListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  pageTitle: string = "Orders";
+  pageTitle: string = "Ordenes";
 
   showImage: boolean = false;
   listFilter: any = {};

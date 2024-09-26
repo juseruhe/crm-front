@@ -5,7 +5,8 @@ import {
   Output} from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 
-import { AuthenticationService } from "../_services";
+import { AuthenticationService } from "../_services/authentication.service";
+import  {environment} from "../../environments/environment";
 
 @Component({
   selector: "login-form",
@@ -55,6 +56,31 @@ export class LoginComponent implements OnInit {
         console.log("login " + this.returnUrl);
         this.isAuth.emit(true);
         this.router.navigate([this.returnUrl]);
+      }
+    );
+  }
+
+  login2(){
+    this.isValidating = true;
+    // this.isloading = true;
+   
+    this.authenticationService.login2(this.model.username,this.model.password).subscribe(
+      () => {
+        // this.isAuthenticated =  true;
+    
+        console.log(" next action here ... " );
+       
+      },
+      error => {
+        console.log(error);
+        this.isValidating = false;
+      },
+      ()=>{
+        this.isValidating = false;
+       console.log("login " + this.returnUrl);
+        this.isAuth.emit(true);
+        this.router.navigate([this.returnUrl]);
+      
       }
     );
   }

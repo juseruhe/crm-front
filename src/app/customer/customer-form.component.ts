@@ -14,6 +14,7 @@ import { CustomerService } from './customer.service';
 import { NumberValidators } from '../shared/number.validator';
 import { GenericValidator } from '../shared/generic-validator';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import {ClientService} from '../_services/client.service';
 
 
 @Component({
@@ -82,7 +83,8 @@ export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private customerService: CustomerService,
-        private breakpointObserver: BreakpointObserver
+        private breakpointObserver: BreakpointObserver,
+        private clientService: ClientService
     ) {
         breakpointObserver.observe([
             Breakpoints.HandsetLandscape,
@@ -186,7 +188,7 @@ export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     saveCustomer(): void {
-        if (this.customerForm.dirty && this.customerForm.valid) {
+       /* if (this.customerForm.dirty && this.customerForm.valid) {
             // Copy the form values over the customer object values
             const customer = Object.assign({}, this.customer, this.customerForm.value);
 
@@ -197,7 +199,19 @@ export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
                 );
         } else if (!this.customerForm.dirty) {
             this.onSaveComplete();
+        }*/
+
+        if(this.customerForm.valid){
+
+         this.clientService.create(this.customerForm.value)
+            .then(res => {
+            alert('cliente creado')
+            })
+          .catch(err => {
+            alert('Error: ' + err.message)
+          })
         }
+        
     }
 
     onSaveComplete(): void {

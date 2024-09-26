@@ -180,9 +180,9 @@ export class OrderFormComponent implements OnInit, AfterViewInit, OnDestroy {
     this.order = order;
 
     if (this.order.id === 0) {
-      this.pageTitle = "Add Order";
+      this.pageTitle = "Agregar Orden";
     } else {
-      this.pageTitle = `Update Order: ${this.order.reference} `;
+      this.pageTitle = `Actualizar Orden: ${this.order.reference} `;
     }
 
     // Update the data on the form

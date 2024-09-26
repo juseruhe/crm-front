@@ -20,7 +20,7 @@
       <span class="title-spacer"></span>
 
       <mat-form-field appearance="standard" class="search-form-fileld">
-        <mat-label>Filter</mat-label>
+        <mat-label>Filtrar</mat-label>
         <input matInput (keyup)="applyFilter($event.target.value)">
         <mat-icon>filter_list</mat-icon>
       </mat-form-field>
@@ -30,7 +30,7 @@
   </mat-toolbar>
   <mat-table #table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="reference">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Reference No. </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Referencia No. </mat-header-cell>
       <mat-cell *matCellDef="let order">
         <!-- <a [routerLink]="['/order', order.id]"> -->
         {{order.reference}}
@@ -38,7 +38,7 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="quantity">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </mat-header-cell>
       <mat-cell *matCellDef="let order"> {{order.products.length}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="amount">
@@ -46,15 +46,15 @@
       <mat-cell *matCellDef="let order"> {{order.amount}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="customerName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Customer </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </mat-header-cell>
       <mat-cell *matCellDef="let order"> {{order.customerName}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="orderDate">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Order Date </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Pedido </mat-header-cell>
       <mat-cell *matCellDef="let order"> {{order.orderDate | date }} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="shippedDate">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Shipped Date </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Envío</mat-header-cell>
       <mat-cell *matCellDef="let order"> {{order.shippedDate | date}} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="id">
@@ -86,25 +86,25 @@
         <mat-icon>search</mat-icon>
       </div>
       <mat-card-title>
-        Advanced Search
+        Búsqueda Avanzada
       </mat-card-title>
     </mat-card-header>
   </mat-card>
   <mat-nav-list style="margin-left:20px;">
     <mat-form-field>
-      <input matInput type="text" placeholder="Reference No." name="reference" [(ngModel)]="searchFilter.reference"
+      <input matInput type="text" placeholder="Referencia No." name="reference" [(ngModel)]="searchFilter.reference"
         #reference />
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="text" placeholder="Order Date" name="reference" [(ngModel)]="searchFilter.orderDate"
+      <input matInput type="text" placeholder="Fecha de Pedido" name="reference" [(ngModel)]="searchFilter.orderDate"
         #reference />
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="text" placeholder="Customer" name="amount" [(ngModel)]="searchFilter.customerName"
+      <input matInput type="text" placeholder="Nombre del Cliente" name="amount" [(ngModel)]="searchFilter.customerName"
         #amount />
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="text" placeholder="Customer Email" name="quantity" [(ngModel)]="searchFilter.customerEmail"
+      <input matInput type="text" placeholder="Correo del Cliente" name="quantity" [(ngModel)]="searchFilter.customerEmail"
         #quantity />
     </mat-form-field>
   </mat-nav-list>
@@ -113,11 +113,11 @@
     <mat-action-list>
       <button mat-raised-button style="color:lightgrey; background-color:darkgreen; margin:5px;"
         (click)="searchOrders(searchFilter);sidenav.toggle()">
-        <mat-icon>search</mat-icon>Search
+        <mat-icon>search</mat-icon>Buscar
       </button>
       <button mat-raised-button style="color:lightgrey; background-color:darkred;margin:5px;"
         (click)="resetSearchFilter(sidenav)">
-        <mat-icon>refresh</mat-icon>Reset
+        <mat-icon>refresh</mat-icon>Refrescar
       </button>
     </mat-action-list>
   </mat-card-header>

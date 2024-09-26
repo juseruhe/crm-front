@@ -57,26 +57,26 @@ export class DashboardComponent implements OnInit {
     {
       bgClass: "user-registration",
       icon: "account_circle",
-      title: "User Registrations",
+      title: "Registros de usuarios",
       subtitle: "68",
     },
 
     {
       bgClass: "new-order",
       icon: "add_shopping_cart",
-      title: "New Orders",
+      title: "Nuevas ordenes",
       subtitle: "49",
     },
     {
       bgClass: "bounce-rate",
       icon: "assessment",
-      title: "Bounce Rate",
+      title: "Tasa de rebote",
       subtitle: "36%  ",
     },
     {
       bgClass: "membership",
       icon: "card_membership",
-      title: "Unique Visitors",
+      title: "Visitantes únicos",
       subtitle: "32",
     }
   ]
@@ -86,7 +86,7 @@ export class DashboardComponent implements OnInit {
     [65, 59, 80, 81, 56, 55, 40],
     [28, 48, 40, 19, 86, 27, 90]
   ];
-  lineChartLabels: Array<string> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  lineChartLabels: Array<string> = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'];
   lineChartType: string = 'line';
   pieChartType: string = 'pie';
 

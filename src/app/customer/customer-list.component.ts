@@ -24,7 +24,7 @@ export class CustomerListComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
 
 
-    pageTitle: string = 'Customers';
+    pageTitle: string = 'Clientes';
     imageWidth: number = 30;
     imageMargin: number = 2;
     showImage: boolean = false;

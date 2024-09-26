@@ -6,6 +6,8 @@ import { AuthGuard } from './_guard';
 import { NotFoundPageComponent } from './notfoundpage';
 import { LoginComponent } from './login';
 import { LoadingComponent } from './loading';
+import { SitesComponent} from './sites/sites.component';
+import {LoginGuard} from './_guard/login.guard';
 
 
 // const routes: Routes = [];
@@ -47,6 +49,11 @@ const routes: Routes = [
     loadChildren: () =>
     import('./product/product.module').then(m => m.ProductModule)
     , canActivate: [AuthGuard]
+  },{
+   path: "sites",
+   loadChildren: () =>
+   import('./sites/sites.module').then(m => m.SitesModule),
+   canActivate: [AuthGuard]
   },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {

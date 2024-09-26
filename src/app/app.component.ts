@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { Breakpoints, BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
-import { AuthenticationService } from './_services';
+import { AuthenticationService } from './_services/authentication.service';
 import { Observable } from 'rxjs';
 
 @Component({
