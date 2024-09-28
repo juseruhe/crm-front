@@ -11,6 +11,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { ClientService } from '../_services/client.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class CustomerListComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-
+   clients: any;
     pageTitle: string = 'Clientes';
     imageWidth: number = 30;
     imageMargin: number = 2;
@@ -49,7 +50,8 @@ export class CustomerListComponent implements OnInit {
         private customerService: CustomerService,
         // private pagerService: PagerService,
         public dialog: MatDialog,
-        public snackBar: MatSnackBar) {
+        public snackBar: MatSnackBar,
+    private clientService: ClientService) {
     }
 
     applyFilter(filterValue: string) {
@@ -58,10 +60,11 @@ export class CustomerListComponent implements OnInit {
         this.dataSource.filter = filterValue;
     }
 
-    freshDataList(customers: Customer[]) {
-        this.customers = customers;
+    freshDataList(client: any) {
+   //     this.customers = customer;
 
-        this.dataSource = new MatTableDataSource(this.customers);
+    //  this.dataSource = new MatTableDataSource(this.customers);
+    this.dataSource = new MatTableDataSource(this.clients)
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
     }
@@ -75,6 +78,8 @@ export class CustomerListComponent implements OnInit {
 
         this.searchFilter = {};
         this.listFilter = {};
+
+        this.getAll();
     }
 
     getCustomers(pageNum?: number) {
@@ -109,20 +114,20 @@ export class CustomerListComponent implements OnInit {
 
     resetListFilter() {
         this.listFilter = {};
-        this.getCustomers();
+        this.getAll();
     }
 
     reset() {
         this.listFilter = {};
         this.searchFilter = {};
-        this.getCustomers();
+        this.getAll();
 
     }
 
     resetSearchFilter(searchPanel: any) {
         searchPanel.toggle();
         this.searchFilter = {};
-        this.getCustomers();
+        this.getAll();
     }
 
     openSnackBar(message: string, action: string) {
@@ -131,9 +136,9 @@ export class CustomerListComponent implements OnInit {
         });
     }
 
-    openDialog(id: number) {
+   openDialog(id: number) {
         let dialogRef = this.dialog.open(ConfirmDialog,
-            { data: { title: 'Dialog', message: 'Are you sure to delete this item?' } });
+            { data: { title: 'Eliminar', message: 'Desea eliminar este cliente?' } });
         dialogRef.disableClose = true;
 
 
@@ -141,23 +146,39 @@ export class CustomerListComponent implements OnInit {
             this.selectedOption = result;
 
             if (this.selectedOption === dialogRef.componentInstance.ACTION_CONFIRM) {
-                this.customerService.deleteCustomer(id).subscribe(
-                    () => {
-                        this.customerService.getCustomers()
-                            .subscribe(customers => {
-                                this.freshDataList(customers);
-                            },
-                            error => this.errorMessage = <any>error);
-                        this.openSnackBar("The item has been deleted successfully. ", "Close");
-                    },
-                    (error: any) => {
-                        this.errorMessage = <any>error;
+                this.clientService.delete(id).then(
+                    res => {
+                        this.getAll()
+                        this.openSnackBar("El cliente fue eliminado éxitosamente. ", "Close");
+                    })
+                    .catch(err => {
+                        this.errorMessage = <any>err;
                         console.log(this.errorMessage);
-                        this.openSnackBar("This item has not been deleted successfully. Please try again.", "Close");
-                    }
-                );
+                        this.openSnackBar("Error al eliminar el cliente. Por favor intenta más tarde.", "Cerrar");
+                    })
+          
             }
         });
+    }
+
+   async getAll(){
+
+    await this.clientService.getAll()
+    .then(res =>{
+        console.log(res.data);
+     
+        this.freshDataList(res.data)
+        // Inicio iteración de avatar
+        res.data.forEach(item =>{
+            item.avatar =  '/assets/img/avatar5.png'
+        })
+
+
+        this.clients = res.data
+    },err => {
+        console.log(err)
+    })
+
     }
 
 

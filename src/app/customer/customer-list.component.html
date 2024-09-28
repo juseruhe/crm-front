@@ -20,7 +20,7 @@
 
       <span class="title-spacer"></span>
       <mat-form-field appearance="standard" class="search-form-fileld">
-        <mat-label>Filter</mat-label>
+        <mat-label>Filtrar</mat-label>
         <input matInput (keyup)="applyFilter($event.target.value)">
         <mat-icon>filter_list</mat-icon>
       </mat-form-field>
@@ -55,12 +55,12 @@
       <mat-cell *matCellDef="let customer"> {{customer.rewards | number }} </mat-cell>
     </ng-container>
     <ng-container matColumnDef="membership">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Afiliado</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Miembro</mat-header-cell>
       <mat-cell *matCellDef="let customer">
-        <span *ngIf="!customer.membership" style="color:green">
+        <span *ngIf="customer.membership" style="color:green">
           <mat-icon>check_circle</mat-icon>
         </span>
-        <span *ngIf="customer.membership" style="color:darkgrey">
+        <span *ngIf="!customer.membership" style="color:darkgrey">
           <mat-icon>highlight_off</mat-icon>
         </span>
       </mat-cell>
@@ -120,11 +120,11 @@
     <mat-action-list>
       <button mat-raised-button style="color:lightgrey; background-color:darkgreen; margin:5px;"
         (click)="searchCustomers(searchFilter);sidenav.toggle()">
-        <mat-icon>search</mat-icon>Search
+        <mat-icon>search</mat-icon>Buscar
       </button>
       <button mat-raised-button style="color:lightgrey; background-color:darkred;margin:5px;"
         (click)="resetSearchFilter(sidenav)">
-        <mat-icon>refresh</mat-icon>Reset
+        <mat-icon>refresh</mat-icon>Refrescar
       </button>
     </mat-action-list>
   </mat-card-header>

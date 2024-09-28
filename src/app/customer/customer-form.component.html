@@ -35,8 +35,8 @@
           <mat-grid-tile [colspan]="fieldColspan">
             <!-- colspan="4"> -->
             <mat-form-field class="form-field" appearance="outline">
-              <mat-label>First Name</mat-label>
-              <input matInput id="firstNameId" type="text" placeholder="First Name (required)"
+              <mat-label>Nombres</mat-label>
+              <input matInput id="firstNameId" type="text" placeholder="Nombres (requerido)"
                 formControlName="firstname" />
               <mat-error *ngIf="displayMessage.firstname">
                 {{displayMessage.firstname}}
@@ -45,8 +45,8 @@
           </mat-grid-tile>
           <mat-grid-tile [colspan]="fieldColspan">
             <mat-form-field class="form-field" appearance="outline">
-              <mat-label>Last Name</mat-label>
-              <input matInput id="lastNameId" type="text" placeholder="Last Name (required)"
+              <mat-label>Apellidos</mat-label>
+              <input matInput id="lastNameId" type="text" placeholder="Apellidos (requerido)"
                 formControlName="lastname" />
               <mat-error *ngIf="displayMessage.lastname">
                 {{displayMessage.lastname}}
@@ -64,25 +64,25 @@
           </mat-grid-tile>
           <mat-grid-tile [colspan]="fieldColspan">
             <mat-form-field class="form-field" appearance="outline">
-              <mat-label>Phone</mat-label>
-              <input matInput id="phone" type="text" placeholder="Phone" formControlName="phone" />
+              <mat-label>Teléfono Fijo</mat-label>
+              <input matInput id="phone" type="text" placeholder="Teléfono Fijo" formControlName="phone" />
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="fieldColspan">
             <mat-form-field class="form-field" appearance="outline">
-              <mat-label>Mobile</mat-label>
-              <input matInput id="mobile" type="text" placeholder="Mobile " formControlName="mobile" />
+              <mat-label>Celular</mat-label>
+              <input matInput id="mobile" type="text" placeholder="Celular " formControlName="mobile" />
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="fieldColspan">
             <mat-form-field class="form-field" appearance="outline">
-              <input matInput placeholder="Rewards" id="ageId" type="number" formControlName="rewards" />
+              <input matInput placeholder="Recompensas" id="ageId" type="number" formControlName="rewards" />
             </mat-form-field>
           </mat-grid-tile>
             <mat-grid-tile [colspan]="fieldColspan">
               <!-- <mat-form-field class="form-field" > -->
                 <!-- <mat-label>Membership</mat-label> -->
-                <mat-slide-toggle id="membership" formControlName="membership">Membership</mat-slide-toggle>
+                <mat-slide-toggle id="membership" formControlName="membership">Miembro</mat-slide-toggle>
                 <!-- </mat-form-field> -->
           </mat-grid-tile>
        

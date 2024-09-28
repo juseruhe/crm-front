@@ -15,6 +15,7 @@ import { NumberValidators } from '../shared/number.validator';
 import { GenericValidator } from '../shared/generic-validator';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import {ClientService} from '../_services/client.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -40,7 +41,7 @@ import {ClientService} from '../_services/client.service';
 export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
 
-    pageTitle: string = 'Update Customer';
+    pageTitle: string = 'Crear Cliente';
     errorMessage: string;
     customerForm: FormGroup;
     customer: Customer = <Customer>{};
@@ -49,6 +50,7 @@ export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
     imageWidth: number = 100;
     imageMargin: number = 2;
     fieldColspan = 3;
+    id: number
 
     // Use with the generic validation message class
     displayMessage: { [key: string]: string } = {};
@@ -84,7 +86,8 @@ export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
         private router: Router,
         private customerService: CustomerService,
         private breakpointObserver: BreakpointObserver,
-        private clientService: ClientService
+        private clientService: ClientService,
+        private snackBar: MatSnackBar
     ) {
         breakpointObserver.observe([
             Breakpoints.HandsetLandscape,
@@ -134,12 +137,25 @@ export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    getCustomer(id: number): void {
-        this.customerService.getCustomer(id)
+   async getCustomer(id: number) {
+      /*  this.customerService.getCustomer(id)
             .subscribe(
                 (customer: Customer) => this.onCustomerRetrieved(customer),
                 (error: any) => this.errorMessage = <any>error
-            );
+            );*/
+
+            this.route.params.subscribe(params => {
+                this.id = params['id']; // 'id' debe coincidir con el parámetro definido en la ruta
+                // Muestra el ID en la consola
+              });
+
+          await  this.clientService.getClient(this.id)
+            .then(res => {
+                this.onCustomerRetrieved(res.data)
+            })
+            .catch(err =>{
+            this.errorMessage = <any>err
+            })
     }
 
     onCustomerRetrieved(customer: Customer): void {
@@ -149,9 +165,10 @@ export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
         this.customer = customer;
 
         if (this.customer.id === 0) {
-            this.pageTitle = 'New Customer';
+            this.pageTitle = 'Nuevo Cliente';
         } else {
-            this.pageTitle = `Customer: ${this.customer.firstname} ${this.customer.lastname}`;
+           
+            this.pageTitle = `Cliente: ${this.customer.firstname} ${this.customer.lastname}`;
         }
 
         // Update the data on the form
@@ -171,7 +188,7 @@ export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
             // Don't delete, it was never saved.
             this.onSaveComplete();
         } else {
-            if (confirm(`Really delete the customer: ${this.customer.firstname}?`)) {
+            if (confirm(`Desea eliminar el cliente: ${this.customer.firstname}?`)) {
                 this.customerService.deleteCustomer(this.customer.id)
                     .subscribe(
                         () => this.onSaveComplete(),
@@ -187,7 +204,7 @@ export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
 
-    saveCustomer(): void {
+  async  saveCustomer() {
        /* if (this.customerForm.dirty && this.customerForm.valid) {
             // Copy the form values over the customer object values
             const customer = Object.assign({}, this.customer, this.customerForm.value);
@@ -202,16 +219,31 @@ export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
         }*/
 
         if(this.customerForm.valid){
-
-         this.clientService.create(this.customerForm.value)
+        
+       if(this.id == 0 || this.id == undefined){
+       await  this.clientService.create(this.customerForm.value)
             .then(res => {
-            alert('cliente creado')
+            
+            this.snackBar.open("Cliente Creado exitosamente","Close",{
+                duration: 1500
+            })
             })
           .catch(err => {
-            alert('Error: ' + err.message)
+           this.snackBar.open(`Error al crear el cliente ${err.message} `,"Close",{
+            duration: 1500
+           })
           })
-        }
+        }else {
         
+            await this.clientService.update(this.id,this.customerForm.value)
+            .then(res => {
+                this.snackBar.open("Cliente Actualizado","Close",{duration: 1500})
+            })
+            .catch(err => {
+                this.snackBar.open(`Error al actualizar el cliente ${err.message}`,"Close",{duration: 1500})
+            })
+        }
+    } 
     }
 
     onSaveComplete(): void {
