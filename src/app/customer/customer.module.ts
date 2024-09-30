@@ -11,6 +11,7 @@ import { CustomerService } from "./customer.service";
 import { SharedModule } from "../shared/shared.module";
 
 import { MaterialModule } from "../shared/material.module";
+import { MatDialogModule } from "@angular/material/dialog";
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { MaterialModule } from "../shared/material.module";
     SharedModule,
     // ReactiveFormsModule,
     MaterialModule,
+    MatDialogModule,
     RouterModule.forChild([
       { path: "", component: CustomerListComponent },
       {

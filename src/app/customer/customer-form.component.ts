@@ -14,7 +14,8 @@ import { CustomerService } from './customer.service';
 import { NumberValidators } from '../shared/number.validator';
 import { GenericValidator } from '../shared/generic-validator';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import {ClientService} from '../_services/client.service';
+
+import { ClientService } from '../_services/client/client.service';
 
 
 @Component({
@@ -39,7 +40,7 @@ import {ClientService} from '../_services/client.service';
 })
 export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
-
+    loading: boolean = true;
     pageTitle: string = 'Update Customer';
     errorMessage: string;
     customerForm: FormGroup;
@@ -49,6 +50,8 @@ export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
     imageWidth: number = 100;
     imageMargin: number = 2;
     fieldColspan = 3;
+    client: any; // Variable para almacenar la información del cliente
+    id: number; // Variable para almacenar el ID del cliente
 
     // Use with the generic validation message class
     displayMessage: { [key: string]: string } = {};
@@ -80,12 +83,31 @@ export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
     };
 
     constructor(private fb: FormBuilder,
+        private clientService: ClientService,
         private route: ActivatedRoute,
         private router: Router,
         private customerService: CustomerService,
         private breakpointObserver: BreakpointObserver,
-        private clientService: ClientService
+
+
     ) {
+
+        //dev julian 
+        this.customerForm = this.fb.group({
+            firstname: ['', Validators.required],
+            lastname: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email]],
+            phone: [''],
+            mobile: [''],
+            rewards: ['', Validators.required],
+            membership: [false],
+        });
+
+
+
+
+
+
         breakpointObserver.observe([
             Breakpoints.HandsetLandscape,
             Breakpoints.HandsetPortrait
@@ -97,7 +119,52 @@ export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
+    //dev julian 
+    loadCustomer(id: number): void {
+        this.clientService.getClientById(id).subscribe(
+            (response) => {
+                if (response && response.data) {
+                    this.customer = response.data; // Accede a los datos del cliente
+                    this.customerForm.patchValue(this.customer); // Llenar el formulario
+                } else {
+                    console.error('No se encontró el cliente.');
+                }
+            },
+            (error) => {
+                console.error('Error fetching customer:', error);
+            }
+        );
+    }
+
+
+    loadClient(): void {
+        this.clientService.getClientById(this.id).subscribe(
+            (data) => {
+                this.client = data; // Asigna los datos obtenidos a la variable client
+            },
+            (error) => {
+                console.error('Error al obtener el cliente:', error); // Manejo de errores
+            }
+        );
+    }
+
     ngOnInit(): void {
+
+        //dev  julian 
+
+           // Obtener el ID del cliente desde la ruta
+           const clientId = +this.route.snapshot.paramMap.get('id')!;
+           this.clientService.getClientById(clientId).subscribe(response => {
+             const clientData = response.data;
+             this.customerForm.patchValue(clientData);
+             this.loading = false; // Cambia a false cuando los datos se cargan
+           }, error => {
+             console.error('Error al cargar los datos del cliente', error);
+             this.loading = false; // Cambia a false incluso en caso de error
+             // Maneja el error aquí
+           });
+
+
         this.customerForm = this.fb.group({
             firstname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
             lastname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
@@ -166,20 +233,7 @@ export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    deleteCustomer(): void {
-        if (this.customer.id === 0) {
-            // Don't delete, it was never saved.
-            this.onSaveComplete();
-        } else {
-            if (confirm(`Really delete the customer: ${this.customer.firstname}?`)) {
-                this.customerService.deleteCustomer(this.customer.id)
-                    .subscribe(
-                        () => this.onSaveComplete(),
-                        (error: any) => this.errorMessage = <any>error
-                    );
-            }
-        }
-    }
+    
 
     toggleImage(): void {
         event.preventDefault();
@@ -187,32 +241,24 @@ export class CustomerFormComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
 
-    saveCustomer(): void {
-       /* if (this.customerForm.dirty && this.customerForm.valid) {
-            // Copy the form values over the customer object values
-            const customer = Object.assign({}, this.customer, this.customerForm.value);
 
-            this.customerService.saveCustomer(customer)
-                .subscribe(
-                    () => this.onSaveComplete(),
-                    (error: any) => this.errorMessage = <any>error
-                );
-        } else if (!this.customerForm.dirty) {
-            this.onSaveComplete();
-        }*/
-
-        if(this.customerForm.valid){
-
-         this.clientService.create(this.customerForm.value)
-            .then(res => {
-            alert('cliente creado')
-            })
-          .catch(err => {
-            alert('Error: ' + err.message)
-          })
+    saveClient(): void {
+        const clientId = +this.route.snapshot.paramMap.get('id')!;
+        if (this.customerForm.valid) {
+            this.clientService.updateClient(clientId, this.customerForm.value).subscribe(
+                response => {
+                    console.log('Cliente actualizado con éxito', response);
+                    this.router.navigate(['/customers']); // Redirige a la lista de clientes inmediatamente
+                },
+                error => {
+                    console.error('Error al actualizar el cliente', error);
+                    // Opcional: Aquí puedes manejar el error de alguna manera, como mostrando un mensaje de error.
+                }
+            );
         }
-        
     }
+
+
 
     onSaveComplete(): void {
         // Reset the form to clear the flags

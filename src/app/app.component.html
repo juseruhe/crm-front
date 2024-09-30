@@ -1,38 +1,33 @@
-
-
-<mat-progress-bar *ngIf="isloading"  class="progress-bar"   mode="indeterminate"  ></mat-progress-bar>
+<mat-progress-bar *ngIf="isloading" class="progress-bar" mode="indeterminate"></mat-progress-bar>
 
 <div *ngIf="!authService.isAuthenticated()">
   <login-form (isAuth)="isAuth($event)"></login-form>
 </div>
 <!-- <mat-progress-bar mode="indeterminate" class=""></mat-progress-bar> -->
-<div *ngIf="authService.isAuthenticated()" [ngClass]="uiContent"  role="main">
+<div *ngIf="authService.isAuthenticated()" [ngClass]="uiContent" role="main">
   <!-- calss="content" -->
   <mat-sidenav-container class="app-container" autosize fullscreen>
-   <mat-sidenav dark #sidenav id="appnav" [mode]="mode" [opened]="!isMobile">
-      <mat-card   class="profile-card">
-        <mat-card-header  >  
-          <div  mat-card-avatar class="avatar">
+    <mat-sidenav dark #sidenav id="appnav" [mode]="mode" [opened]="!isMobile">
+      <mat-card class="profile-card">
+        <mat-card-header>
+          <div mat-card-avatar class="avatar">
             <img src="/assets/img/avatar0.png" class="avatar">
           </div>
 
           <mat-card-title [hidden]="user!==null && user!==undefined" style="padding:5px;">
+
+            Sebastian ruiz
+
             {{user?.firstname}} {{user?.lastname}}
           </mat-card-title>
 
-          <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-      
-        </mat-card-header> 
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="logout()">Cerrar Sesión</button>
-          <button mat-menu-item>Cambiar Contraseña</button>
-        </mat-menu>
+   
+        </mat-card-header>
+    
       </mat-card>
-      <mat-nav-list >
+      <mat-nav-list>
         <a mat-list-item routerLink="dashboard">
-          <mat-icon mat-list-icon >insert_chart_outline</mat-icon>
+          <mat-icon mat-list-icon>insert_chart_outline</mat-icon>
           <span mat-line>Panel</span>
         </a>
         <a mat-list-item routerLink="orders">
@@ -47,11 +42,15 @@
           <mat-icon mat-list-icon>store</mat-icon>
           <span mat-line>Productos</span>
         </a>
+        <a mat-list-item routerLink="sites">
+          <mat-icon mat-list-icon>link</mat-icon>
+          <span mat-line>CRM</span>
+        </a>
         <a mat-list-item routerLink="about">
           <mat-icon mat-list-icon>info_outline</mat-icon>
           <span mat-line>Acerca de</span>
         </a>
-        
+
 
       </mat-nav-list>
 
@@ -59,29 +58,46 @@
 
     </mat-sidenav>
     <!-- <mat-sidenav-content [hidden]="!authService.isAuthenticated()"> -->
-    <mat-sidenav-content class="sidenav-content" > 
-      <mat-toolbar dark style="background-color:rgb(228, 224, 224)">
-        <button mat-icon-button (click)="sidenav.toggle()">
+    <mat-sidenav-content class="sidenav-content">
+      <mat-toolbar dark style="background-color: #1e1e2e">
+        <button mat-icon-button (click)="sidenav.toggle()" style="   color: white;">
           <mat-icon mat-list-icon>list</mat-icon>
         </button>
 
-        <span style="margin-left: 20px;width:100%">
+        <span style="margin-left: 70%;width:100%">
           <a aria-label="GitHub Repository" style=" float:right" class="docs-button docs-navbar-hide-small mat-button"
-            href="https://github.com/harryho/ng-md-app" mat-button="" tabindex="0" aria-disabled="false">
+             mat-button="" tabindex="0" aria-disabled="false">
             <span class="mat-button-wrapper">
-              <!-- <img _ngcontent-c1="" alt="angular" class="docs-angular-logo" src="/assets/icon/GitHub-Mark-32px.png"> -->
-              <svg height="30" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="32"
-                aria-hidden="true">
-                <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
-              </svg>
-              GitHub </span>
+           
+              <img src="https://unoweb.com.co/unoweb/digital/assets/images/general/logo-web.png" style="width:100px "alt="">
+            
+      
+            </span>
+            <button mat-icon-button [matMenuTriggerFor]="menu22" style="color: white;">
+              <mat-icon>account_circle</mat-icon>
+            </button>
+            
+
+            <mat-menu #menu22="matMenu">
+              <button mat-menu-item>
+                <mat-icon>link</mat-icon> <!-- Ícono de URL o enlace -->
+                <span >Cambiar Contraseña</span>
+              </button>
+              <button mat-menu-item mat-menu-item (click)="logout()">
+                <mat-icon>logout</mat-icon> <!-- Ícono de cerrar sesión -->
+                <span >Cerrar Sesión</span>
+              </button>
+            </mat-menu>
+
+           
+
           </a>
         </span>
         <span style="float:right">
 
         </span>
       </mat-toolbar>
-      <div class="main-content" > <!-- [hidden]="!authService.isAuthenticated()"> -->
+      <div class="main-content"> <!-- [hidden]="!authService.isAuthenticated()"> -->
         <router-outlet></router-outlet>
       </div>
       <!-- <footer class="footer" [ngStyle]="{'position': isMobile?'relative':'absolute'}">
@@ -90,10 +106,8 @@
     </mat-sidenav-content>
 
 
-  
+
 
   </mat-sidenav-container>
 
 </div>
-
-

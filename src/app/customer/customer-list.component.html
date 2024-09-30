@@ -4,11 +4,13 @@
   <mat-card-header>
     <mat-card-title class="view-card-title">
       <h1>{{pageTitle }}</h1>
+
+
     </mat-card-title>
   </mat-card-header>
   <mat-toolbar class="primary">
     <mat-toolbar-row>
-      <button mat-mini-fab style="margin-right:10px; background-color:#e07c9e" [routerLink]="['/customers/edit/', 0]">
+      <button mat-mini-fab style="margin-right:10px; background-color:#e07c9e" (click)="openModal()">
         <mat-icon>add</mat-icon>
       </button>
       <button mat-mini-fab style="margin-right:10px; background-color:#a28b6e" (click)="sidenav.toggle()">
@@ -32,60 +34,75 @@
     <ng-container matColumnDef="avatar">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let customer">
-        <!-- <a [routerLink]="['/customer', customer.id]"> -->
-        <img *ngIf='customer.avatar' [src]='customer.avatar' [title]='customer.firstname | uppercase'
-          [style.width.px]='imageWidth' [style.margin.px]='imageMargin'>
-        <!-- </a> -->
+        <img *ngIf="customer.avatar" [src]="customer.avatar" [title]="customer.firstname | uppercase"
+          [style.width.px]="50" [style.margin.px]="5"> <!-- Ajusta el tamaño según tus necesidades -->
       </mat-cell>
     </ng-container>
+
     <ng-container matColumnDef="firstname">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Nombres </mat-header-cell>
-      <mat-cell *matCellDef="let customer"> {{customer.firstname}} </mat-cell>
+      <mat-cell *matCellDef="let customer"> {{ customer.firstname }} </mat-cell>
     </ng-container>
+
     <ng-container matColumnDef="lastname">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </mat-header-cell>
-      <mat-cell *matCellDef="let customer"> {{customer.lastname}} </mat-cell>
+      <mat-cell *matCellDef="let customer"> {{ customer.lastname }} </mat-cell>
     </ng-container>
+
     <ng-container matColumnDef="email">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Correo </mat-header-cell>
-      <mat-cell *matCellDef="let customer"> {{customer.email}} </mat-cell>
+      <mat-cell *matCellDef="let customer"> {{ customer.email }} </mat-cell>
     </ng-container>
+
+    <ng-container matColumnDef="phone">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Teléfono </mat-header-cell>
+      <mat-cell *matCellDef="let customer"> {{ customer.phone }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="mobile">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Celular </mat-header-cell>
+      <mat-cell *matCellDef="let customer"> {{ customer.mobile }} </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="rewards">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Recompensas </mat-header-cell>
-      <mat-cell *matCellDef="let customer"> {{customer.rewards | number }} </mat-cell>
+      <mat-cell *matCellDef="let customer"> {{ customer.rewards }} </mat-cell>
     </ng-container>
+
     <ng-container matColumnDef="membership">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Afiliado</mat-header-cell>
-      <mat-cell *matCellDef="let customer">
-        <span *ngIf="!customer.membership" style="color:green">
-          <mat-icon>check_circle</mat-icon>
-        </span>
-        <span *ngIf="customer.membership" style="color:darkgrey">
-          <mat-icon>highlight_off</mat-icon>
-        </span>
-      </mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Membresía </mat-header-cell>
+      <mat-cell *matCellDef="let customer"> {{ customer.membership }} </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef style="justify-content:right;">
-        <!-- <button mat-button style="color:white; background-color:darkgrey" (click)="resetListFilter()">Reset</button> -->
-      </mat-header-cell>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef style="justify-content:right;"> Acciones </mat-header-cell>
       <mat-cell *matCellDef="let customer" style="justify-content:right;">
-        <button mat-mini-fab style="background-color:teal; min-height: 30px;   margin: 5px;"
-          [routerLink]="['/customers/edit/', customer.id]">
+        <button mat-mini-fab style="background-color:teal; min-height: 30px; margin: 5px;"
+          [routerLink]="['/customers/edit/', customer.id]" (click)="getClientById(customer.id)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-mini-fab style="background-color:lightblue; min-height: 30px;  margin: 5px;"
+        <button mat-mini-fab style="background-color:lightblue; min-height: 30px; margin: 5px;"
           (click)="openDialog(customer.id)">
           <mat-icon>delete</mat-icon>
         </button>
       </mat-cell>
     </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
+
+
+
   <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10]">
   </mat-paginator>
 </mat-card>
+
+
+
+
+
+
 
 <mat-sidenav class="search-panel" position="end" dark #sidenav mode="push" opened="false">
   <mat-card class="profile-card">
@@ -122,11 +139,176 @@
         (click)="searchCustomers(searchFilter);sidenav.toggle()">
         <mat-icon>search</mat-icon>Search
       </button>
-      <button mat-raised-button style="color:lightgrey; background-color:darkred;margin:5px;"
-        (click)="resetSearchFilter(sidenav)">
+      <button mat-raised-button style="color:lightgrey; background-color:darkred;margin:5px;" (click)="reset()">
         <mat-icon>refresh</mat-icon>Reset
       </button>
     </mat-action-list>
   </mat-card-header>
 </mat-sidenav>
 <!-- </mat-sidenav-container> -->
+
+
+
+<!-- Modal -->
+<div *ngIf="isModalOpen" class="modal-overlay">
+  <div class="modal-content">
+    <form novalidate (ngSubmit)="createClient()" [formGroup]="customerForm">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <h1>Crear Nuevo Cliente</h1>
+          </mat-card-title>
+        </mat-card-header>
+
+
+        <mat-card-content>
+
+          <div class="row">
+            <div class="col-md-6 mb-3"> <!-- Columna para el primer conjunto de campos -->
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>First Name</mat-label>
+                <input matInput id="firstNameId" type="text" formControlName="firstname" placeholder="First Name (required)">
+                <mat-error *ngIf="customerForm.get('firstname').invalid">{{displayMessage.firstname}}</mat-error>
+              </mat-form-field>
+            </div>
+    
+            <div class="col-md-6 mb-3"> <!-- Columna para el segundo conjunto de campos -->
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Last Name</mat-label>
+                <input matInput id="lastNameId" type="text" formControlName="lastname" placeholder="Last Name (required)">
+                <mat-error *ngIf="customerForm.get('lastname').invalid">{{displayMessage.lastname}}</mat-error>
+              </mat-form-field>
+            </div>
+    
+            <div class="col-md-6 mb-3">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput id="email" type="email" formControlName="email" placeholder="Email">
+                <mat-error *ngIf="customerForm.get('email').invalid">{{displayMessage.email}}</mat-error>
+              </mat-form-field>
+            </div>
+    
+            <div class="col-md-6 mb-3">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Phone</mat-label>
+                <input matInput id="phone" type="number" formControlName="phone" placeholder="Phone">
+              </mat-form-field>
+            </div>
+    
+            <div class="col-md-6 mb-3">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Mobile</mat-label>
+                <input matInput id="mobile" type="number" formControlName="mobile" placeholder="Mobile">
+              </mat-form-field>
+            </div>
+    
+            <div class="col-md-6 mb-3">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Rewards</mat-label>
+                <input matInput id="rewards" type="number" formControlName="rewards" placeholder="Rewards">
+              </mat-form-field>
+            </div>
+    
+            <div class="col-md-6 mb-3">
+              <mat-slide-toggle formControlName="membership">Membership</mat-slide-toggle>
+            </div>
+    
+          </div>
+
+
+
+
+
+        </mat-card-content>
+
+
+
+
+
+        <mat-card-actions>
+          <button mat-flat-button color="primary" type="submit" [disabled]="!customerForm.valid">Crear</button>
+          <button mat-button color="accent" type="button" (click)="closeModal()">Cancelar</button>
+        </mat-card-actions>
+        
+
+
+
+
+
+      </mat-card>
+    </form>
+  </div>
+</div>
+
+
+<style>
+
+.mat-button.mat-accent, .mat-icon-button.mat-accent, .mat-stroked-button.mat-accent {
+    color: #ffffff;
+    background: red;
+}
+
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* Asegúrate de que el modal esté por encima de otros elementos */
+  }
+
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    width: 35%;
+  }
+
+
+
+.mat-form-field {
+  margin-bottom: 1rem; /* Espaciado inferior para los campos de formulario */
+}
+
+.mat-slide-toggle {
+  margin-top: 1.5rem; /* Espaciado superior para el toggle */
+}
+
+/* Para que el error se vea bien */
+.mat-error {
+  color: red; /* Color del texto de error */
+}
+
+/* Opcional: Estilo para el mat-card-content */
+mat-card-content {
+  padding: 16px; /* Espaciado interno del card */
+  background-color: #f8f9fa; /* Fondo claro para el contenido del card */
+  border-radius: 8px; /* Esquinas redondeadas */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Estilo para la fila */
+.row {
+  display: flex; /* Usa flexbox para la alineación */
+  flex-wrap: wrap; /* Permite que las columnas se ajusten */
+}
+
+/* Opcional: Estilo para las columnas */
+.col-md-6 {
+  flex: 0 0 50%; /* Dos columnas en pantallas medianas o más grandes */
+  max-width: 50%; /* Limita el ancho máximo */
+}
+
+/* Agrega espaciado adicional si es necesario */
+.mb-3 {
+  margin-bottom: 1rem; /* Espaciado inferior */
+}
+
+</style>

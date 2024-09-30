@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "ngmd9"
+  "defaultProject": "ngmd9",
+  "cli": {
+    "analytics": "e76d0d70-f799-44e7-bdd4-6bc2a765fb5f"
+  }
 }

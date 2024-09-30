@@ -17,6 +17,7 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
   uiContent = "content"
   progrssBarClass = "progress-bar";
   isloading = true;
+isMenuVisible: any;
 
   constructor(
     // private loadingBar: SlimLoadingBarService,

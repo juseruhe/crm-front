@@ -19,6 +19,7 @@ import { ConfirmDialog } from './shared/dialog.component';
 import { LoadingComponent } from  './loading';
 import { AuthGuard } from './_guard';
 import { SitesComponent } from './sites/sites.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -41,7 +42,7 @@ import { SitesComponent } from './sites/sites.component';
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ChartsModule,
     AppRoutingModule,
-
+    MatDialogModule
   ],
   providers: [
     AuthGuard,
