@@ -125,10 +125,10 @@ import { Customer } from "./user";
       });
 
 
-      const clientId = +this.route.snapshot.paramMap.get('id')!;
-      this.userService.getUserById(clientId).subscribe(response => {
-        const clientData = response.data;
-        this.userForm.patchValue(clientData);
+      const id = +this.route.snapshot.paramMap.get('id')!;
+      this.userService.getUserById(id).subscribe(response => {
+        const userData = response.data;
+        this.userForm.patchValue(userData);
         this.loading = false; // Cambia a false cuando los datos se cargan
       }, error => {
         console.error('Error al cargar los datos del cliente', error);
