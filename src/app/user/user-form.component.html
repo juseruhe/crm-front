@@ -1,0 +1,71 @@
+<form *ngIf="!loading" novalidate (ngSubmit)="saveUser()" [formGroup]="userForm">
+  <mat-card>
+    <mat-toolbar style="background-color: #FFF">
+      <mat-toolbar-row>
+        <span class="view-card-title">
+          <h1>Editar Cliente</h1>
+        </span>
+        <span class="title-spacer"></span>
+        <mat-card-actions>
+          <button mat-mini-fab class="primary" style="margin-right:10px; background-color:darkgray" type="submit" [disabled]='!userForm.valid'>
+            <mat-icon>save</mat-icon>
+          </button>
+          <button mat-mini-fab style="margin-right:10px;" [routerLink]="['/user']">
+            <mat-icon>cancel</mat-icon>
+          </button>
+          
+        </mat-card-actions>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-card-content style="margin: 5 0 5 10px;">
+      <mat-grid-list cols="12" rowHeight="80px">
+        <mat-grid-tile [colspan]="fieldColspan">
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput id="firstNameId" type="text" formControlName="firstname" />
+            <mat-error *ngIf="userForm.get('firstname').invalid">{{displayMessage.firstname}}</mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="fieldColspan">
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput id="lastNameId" type="text" formControlName="lastname" />
+            <mat-error *ngIf="userForm.get('lastname').invalid">{{displayMessage.lastname}}</mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="fieldColspan">
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput id="email" type="email" formControlName="email" />
+            <mat-error *ngIf="userForm.get('email').invalid">{{displayMessage.email}}</mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="fieldColspan">
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>password</mat-label>
+            <input matInput id="password" type="password" formControlName="password" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="fieldColspan">
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>roleId</mat-label>
+            <input matInput id="roleId" type="number" formControlName="roleId" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="fieldColspan">
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>mobile</mat-label>
+            <input matInput id="mobile" type="number" formControlName="mobile" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="fieldColspan">
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>phone</mat-label>
+            <input matInput id="phone" type="number" formControlName="phone" />
+          </mat-form-field>
+        </mat-grid-tile>
+     
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>
+</form>
